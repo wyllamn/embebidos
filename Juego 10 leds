@@ -1,0 +1,94 @@
+//Declarar las variables
+int led_1=4;
+int led_2=5;
+int led_3=6;
+int led_4=7;
+int led_5=8;
+int led_6=9;
+int led_7=10;
+int led_8=11;
+int led_9=12;
+int led_10=13;
+
+int sw_1=2;
+int sw_2=1;
+int sw_3=0;
+
+int contador=0;
+int cont1=0;
+int cont2=9;
+int leds[10]={led_1,led_2,led_3,led_4,led_5,led_6,led_7,led_8,led_9,led_10};
+int rnd=0;
+
+void setup() {
+  for(;contador<10;contador++){
+    pinMode(leds[contador],OUTPUT);
+  }
+  pinMode(sw_1, INPUT);
+  pinMode(sw_2, INPUT);
+  pinMode(sw_3, INPUT);
+  
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+ if(digitalRead(sw_1)==LOW&&digitalRead(sw_2)==LOW&&digitalRead(sw_3)==LOW){
+  //Uso del puerto B y D para el apagado de leds
+  PORTB=B000000;
+  PORTD=B00000000;
+ }
+ if (digitalRead(sw_1)==LOW&&digitalRead(sw_2)==HIGH&&digitalRead(sw_3)==LOW){
+  //Uso del puerto B y D para encender los leds pares
+  PORTB=B101010;
+  PORTD=B10100000;
+ }
+ if (digitalRead(sw_1)==LOW&&digitalRead(sw_2)==HIGH&&digitalRead(sw_3)==HIGH){
+  //Uso de cada pin para encender los leds impares
+  digitalWrite(led_1,HIGH) ;
+  digitalWrite(led_2,LOW) ;
+  digitalWrite(led_3,HIGH) ;
+  digitalWrite(led_4,LOW) ;
+  digitalWrite(led_5,HIGH) ;
+  digitalWrite(led_6,LOW) ;
+  digitalWrite(led_7,HIGH) ;
+  digitalWrite(led_8,LOW) ;
+  digitalWrite(led_9,HIGH) ;
+  digitalWrite(led_10,LOW) ;
+ }
+ if (digitalRead(sw_1)==HIGH&&digitalRead(sw_2)==LOW&&digitalRead(sw_3)==HIGH){
+  //Uso del puerto B y D para el apagado de leds 
+  PORTB=B000000;
+  PORTD=B00000000;
+  rnd=random(0,10);//escoge un numero aleatorio entre 0 y 10 
+  digitalWrite(leds[rnd],HIGH);// enciende el numero de led elegido anteriormente
+  delay(500);  
+ }
+ if (digitalRead(sw_1)==HIGH&&digitalRead(sw_2)==HIGH&&digitalRead(sw_3)==LOW){  
+  //Uso del puerto B y D para el apagado de leds 
+  PORTB=B000000;
+  PORTD=B00000000;
+  //realizamos un contador con dos variables para que los leds se enciendan de afuera hacia dentro
+  for(cont1=0, cont2=9;cont1<5,cont2>=5;cont1++,cont2--){      
+      digitalWrite(leds[cont1],HIGH);            
+      digitalWrite(leds[cont2],HIGH);   
+      delay(200);
+      digitalWrite(leds[cont1],LOW);            
+      digitalWrite(leds[cont2],LOW);
+      delay(200);}
+   cont1=0;
+   cont2=9;
+ }
+ if (digitalRead(sw_1)==HIGH&&digitalRead(sw_2)==HIGH&&digitalRead(sw_3)==HIGH){ 
+  //este contador permetira repetir el juego unicamente 5 veces
+  for(;cont1<5;cont1++){
+  //hace que se enciendan los leds impares 
+    for(cont2=0;cont2<5;cont2++){
+      digitalWrite(leds[cont2*2],HIGH);   
+      delay(100);
+      digitalWrite(leds[cont2*2],LOW);   
+      delay(100);
+    }
+    cont2=0;  
+  }     
+ } 
+ }
