@@ -1,0 +1,79 @@
+#include "datos_matriz.h"
+int i=0;
+int j=0;
+int sum=0;
+long prod=1;
+int num=0;
+int prom=0;
+
+
+void setup() {
+  Serial.begin(9600);
+  Serial.println ("**** Inicio del Programa ****");
+  Serial.println ("");
+  Serial.println ("SUMAS");
+  Serial.println ("");
+}
+
+void loop() {
+  //Suma de filas
+  for(;i<20;i++){       
+    num=i+1;
+    Serial.println ("Suma: "+String(num));
+    delay(100);
+    for(;j<3;j++){     
+      sum=sum+matriz[i][j]; 
+      Serial.print (String(matriz[i][j])+" ");
+      delay(100);
+    }                  
+    Serial.print("= "+String(sum));
+    delay (100);
+    Serial.println("");
+    sum=0;
+    j=0;
+  }  
+  sum=0;
+  //Multiplicacion de columas
+  if(i<=20){
+    Serial.println ("");
+    Serial.println ("MULTIPLICACIONES");
+    Serial.println ("");
+    for(i=0;i<3;i++){       
+      num=i+1;
+      Serial.println ("Multiplicacion: "+String(num));
+      delay(100);
+      for(j=0;j<20;j++){     
+        prod = prod * matriz[j][i]; 
+        Serial.print (String(matriz[j][i])+" ");
+        delay(100);
+    }
+    Serial.print ("= "+String(prod));
+    delay (100);
+    Serial.println("");
+    prod=1;
+    j=0;
+  }  
+  }
+  //Promedio de Sumas de Columnas  
+  if(i<=20){
+    Serial.println ("");
+    Serial.println ("PROMEDIO");
+    Serial.println ("");
+    for(i=0;i<3;i++){       
+      for(j=0;j<20;j++){     
+        sum = sum + matriz[j][i];
+    }
+    j=0;
+  } 
+    if(sum!=0){
+      Serial.print("Promedio: ");
+      prom=sum/i; 
+      Serial.println(prom);
+      delay(100);  
+      sum=0;
+      i=21;
+      Serial.println ("");
+      Serial.println ("**** Fin del Programa ****");
+  }  
+  }   
+}
